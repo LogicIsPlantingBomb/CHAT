@@ -8,3 +8,9 @@ socket.on('disconnect',function(){
 socket.on("newMessage",function(message){
 	console.log("new message",message);
 })
+socket.emit("createMessage",{
+	from:"Dhruv",
+	text:"heyyy how are you?"
+},function(){
+	console.log("server got it");
+})
