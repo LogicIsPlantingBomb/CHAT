@@ -4,7 +4,7 @@ const socketIO = require("socket.io");
 const publicPath = path.join(__dirname,'/../public');
 const port = process.env.PORT || 3000;
 const http = require("http");
-const {generateMessage} = require("./utils/message"); 
+const {generateMessage,generateLocation} = require("./utils/message"); 
 
 let app = express();
 let server = http.createServer(app);
@@ -25,8 +25,12 @@ io.on('connection',(socket)=>{
 	socket.on("disconnect",()=>{
 		console.log("User disconnected");
 	})
+	socket.on("createGeo",(coords,callback)=>{
+		io.emit("newLocationMessage",generateLocation(coords.from,coords.lat ,coords.lon));
+		callback();
+		console.log(coords);
+	})
 })
 server.listen(port,()=>{
 	console.log(`server is running on port ${port}`);
 })
-
