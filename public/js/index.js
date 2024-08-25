@@ -6,20 +6,42 @@ socket.on('disconnect',function(){
 	console.log("Disconnected from the server");
 })
 socket.on("newMessage",function(message){
-	console.log("new message",message);
+	
+	const formatedTime = moment(message.createdAt).format('LT');
+	const template = document.querySelector("#message-template").innerHTML;
+	const html = Mustache.render(template,{
+		from:message.from,
+		text:message.text,
+		createdAt:formatedTime
+	});
+	const div = document.createElement("div");
+	div.innerHTML = html
+	document.querySelector('#messages').appendChild(div);
+	/*console.log("new message",message);
 	let li= document.createElement('li');
-	li.innerText = `${message.from}:${message.text}`;
-	document.querySelector('body').appendChild(li);
+	li.innerText = `${message.from} ${formatedTime}:${message.text}`;
+	document.querySelector('#messages').appendChild(li);*/
 })
 socket.on("newLocationMessage", function(message){
+	const formatedTime = moment(message.createdAt).format('LT');
 	console.log("Location",message);
-	let li = document.createElement("li");
+	const template = document.querySelector("#geo-template").innerHTML;
+	const html = Mustache.render(template,{
+		from:message.from,
+		url:message.url,
+		createdAt:formatedTime
+	})
+	const div = document.createElement("div");
+	div.innerHTML = html;
+
+	/*let li = document.createElement("li");
 	let a = document.createElement("a");
+	li.innerText = `${message.from} ${formatedTime}:`;
 	a.setAttribute('target','_blank');
 	a.setAttribute('href',message.url);
 	a.innerText="My current location";
-	li.appendChild(a);
-	document.querySelector('body').appendChild(li);
+	li.appendChild(a);*/
+	document.querySelector('#messages').appendChild(div);
 })
 document.querySelector("#submit-btn").addEventListener("click",function(e){
 	e.preventDefault();

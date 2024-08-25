@@ -1,0 +1,166 @@
+/* Reset and Base Styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: HelveticaNeue-Light, "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    font-weight: 300;
+    font-size: 0.95rem;
+}
+
+body {
+    height: 100vh;
+}
+
+ul, li {
+    list-style-position: inside;
+    list-style-type: none;
+}
+
+h3 {
+    font-weight: 600;
+    text-align: center;
+    font-size: 1.5rem;
+}
+
+/* Button Styles */
+button {
+    background: #265f82;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    padding: 10px;
+    transition: background 0.3s ease;
+}
+
+button:hover {
+    background: #1F4C69;
+}
+
+button:disabled {
+    cursor: default;
+    background: #698ea5;
+}
+
+/* Chat Layout */
+.chat {
+    display: flex;
+    height: 100vh;
+}
+
+/* Sidebar Styles */
+.chat__sidebar {
+    overflow-y: auto;
+    width: 260px;
+    background: linear-gradient(325deg, rgba(39,107,130,1) 0%, rgba(49,84,129,1) 100%);
+}
+
+.chat__sidebar h3 {
+    color: #e6eaee;
+    margin: 10px 20px;
+    text-align: left;
+}
+
+.chat__sidebar ul {
+    list-style-type: none;
+}
+
+.chat__sidebar li {
+    background: #e6eaee;
+    border: 1px solid #e1e1e1;
+    border-radius: 5px;
+    margin: 10px;
+    padding: 10px;
+}
+
+/* Main Chat Area Styles */
+.chat__main {
+    display: flex;
+    flex-direction: column;
+    width: calc(100% - 260px);
+    height: 100%;
+}
+
+.chat__messages {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 10px;
+    list-style-type: none;
+}
+
+/* Footer Styles */
+.chat__footer {
+    background: #e6eaee;
+    display: flex;
+    padding: 10px;
+}
+
+.chat__footer form {
+    display: flex;
+    flex-grow: 1;
+}
+
+.chat__footer form * {
+    margin-right: 10px;
+}
+
+.chat__footer input {
+    border: none;
+    padding: 10px;
+    flex-grow: 1;
+}
+
+/* Message Styles */
+.message {
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #f8f8f8;
+    border-radius: 5px;
+}
+
+.message__title {
+    display: flex;
+    margin-bottom: 5px;
+}
+
+.message__title h4 {
+    font-weight: 600;
+    margin-right: 10px;
+}
+
+.message__title span {
+    color: #999;
+}
+
+/* Responsive Styles */
+@media (max-width: 600px) {
+    * {
+        font-size: 1rem;
+    }
+
+    .chat {
+        flex-direction: column;
+    }
+
+    .chat__sidebar {
+        width: 100%;
+        height: 200px;
+    }
+
+    .chat__main {
+        width: 100%;
+        height: calc(100% - 200px);
+    }
+
+    .chat__footer {
+        flex-direction: column;
+    }
+
+    .chat__footer form {
+        margin-bottom: 10px;
+    }
+
+    .chat__footer button {
+        margin-right: 0;
+    }
+}
