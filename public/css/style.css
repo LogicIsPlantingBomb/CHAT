@@ -156,6 +156,7 @@ button:disabled {
     margin:2px;
     padding: 10px;	
     background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
 }
 
 .message__title {

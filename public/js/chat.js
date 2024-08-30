@@ -1,6 +1,21 @@
 let socket = io();
+function scroll(){
+	let messages = document.querySelector("#messages").lastElementChild;
+	messages.scrollIntoView();
+}
 socket.on('connect',function(){
-	console.log("Connected to server");
+	 let searchQuery = window.location.search.substring(1);
+  	let params = JSON.parse('{"' + decodeURI(searchQuery).replace(/&/g, '","').replace(/\+/g, ' ').replace(/=/g,'":"') + '"}');
+
+  	socket.emit('join', params, function(err) {
+  	  if(err){
+  	    alert(err);
+  	    window.location.href = '/';
+  	  }else {
+      	console.log('No Error');
+   	 }
+  	})
+	socket.params = params;
 })
 socket.on('disconnect',function(){
 	console.log("Disconnected from the server");
@@ -21,6 +36,7 @@ socket.on("newMessage",function(message){
 	let li= document.createElement('li');
 	li.innerText = `${message.from} ${formatedTime}:${message.text}`;
 	document.querySelector('#messages').appendChild(li);*/
+	scroll();
 })
 socket.on("newLocationMessage", function(message){
 	const formatedTime = moment(message.createdAt).format('LT');
@@ -42,13 +58,15 @@ socket.on("newLocationMessage", function(message){
 	a.innerText="My current location";
 	li.appendChild(a);*/
 	document.querySelector('#messages').appendChild(div);
+	scroll();
 })
 document.querySelector("#submit-btn").addEventListener("click",function(e){
 	e.preventDefault();
 	let messageInput= document.querySelector("input[name='message']").value;
 	socket.emit("createMessage",{
 		from:"User",
-		text:messageInput
+		text:messageInput,
+		room:socket.params.room
 	},function(){
 	})
 })
@@ -62,7 +80,8 @@ document.querySelector("#geo").addEventListener("click",function(e){
 		socket.emit("createGeo",{
 			from : "user",
 			lat : position.coords.latitude,
-			lon : position.coords.longitude
+			lon : position.coords.longitude,
+			room : socket.params.room
 		},function(){
 			console.log("fetching coords");
 		});
